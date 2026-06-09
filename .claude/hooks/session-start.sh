@@ -65,9 +65,9 @@ CAVEMAN
 }
 
 # Print the fixed "universal skills" reminder block.
-# Cross-cutting skills that apply to most sessions regardless of task; topic-
-# specific skills (context-extractions etc.) are not listed — Claude discovers
-# those from the available-skills list.
+# Cross-cutting skills that apply to most sessions regardless of task; project-
+# specific skills are not listed — Claude discovers those from the
+# available-skills list.
 print_skill_reminders() {
   cat >&2 <<'SKILLS'
 [SessionStart] Universal skills — invoke proactively when the trigger fires:
