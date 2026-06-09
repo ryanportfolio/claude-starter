@@ -72,7 +72,7 @@ if ($ghOk) {
         Write-Host "  Local:  $target"
         Write-Host "  Remote: https://github.com/$((gh api user --jq .login))/$Name"
         Write-Host ""
-        Write-Host "Next: open the folder in Claude Code and fill in the FILL IN sections of CLAUDE.md."
+        Write-Host "Next: open the folder in Claude Code and run /init-project (guided setup)."
         exit 0
     }
 }
@@ -102,4 +102,4 @@ Write-Host "       cd `"$target`""
 Write-Host "       git remote add origin https://github.com/<your-username>/$Name.git"
 Write-Host "       git push -u origin main"
 Write-Host ""
-Write-Host "Next: open the folder in Claude Code and fill in the FILL IN sections of CLAUDE.md."
+Write-Host "Next: open the folder in Claude Code and run /init-project (guided setup)."
