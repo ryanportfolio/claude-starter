@@ -39,7 +39,6 @@ Defaults until configured:
 - Verify before declaring done. Reproduce bugs before fixing them.
 - Scratch work → `.tmp/` (gitignored). Promote to `scripts/` if reusable; otherwise delete.
 - Durable project knowledge → `.claude/reference/` via `/recall save` (committed, travels to every machine and sandbox). Auto-memory is per-machine and supplementary — never a learning's only home.
-- Never commit secrets. Never print secret values into chat, logs, or commits — names only.
 - Welcome correction. Confident-sounding mistakes happen; don't defend wrong answers.
 
 ## Subagents: direct-by-default, never Haiku
