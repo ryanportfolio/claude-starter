@@ -52,16 +52,18 @@ if ($ghOk) {
         # gh clones into .\$Name relative to cwd; move it to the destination if different
         $cloned = Join-Path (Get-Location) $Name
         if ($cloned -ne $target -and (Test-Path $cloned)) { Move-Item $cloned $target }
-        # Strip template-only files from the new project
+        # Strip template-only files, drop in a README stub
         Push-Location $target
         git rm -rq --ignore-unmatch bootstrap
         git rm -q --ignore-unmatch README.md
         if (Test-Path 'bootstrap') { Remove-Item -Recurse -Force bootstrap }
         if (Test-Path 'README.md') { Remove-Item -Force README.md }
+        [IO.File]::WriteAllText((Join-Path (Get-Location).Path 'README.md'), "# $Name`r`n", [Text.Encoding]::ASCII)
+        git add README.md
         if (-not (git status --porcelain)) {
             Write-Host "Nothing to clean up." -ForegroundColor DarkGray
         } else {
-            git commit -qm "Remove starter-template bootstrap files"
+            git commit -qm "Strip template files, add README stub"
             git push -q
         }
         Pop-Location
@@ -84,6 +86,7 @@ robocopy $localTemplate $target /E /XD .git bootstrap /XF README.md | Out-Null
 if ($LASTEXITCODE -ge 8) { Write-Host "Copy failed." -ForegroundColor Red; exit 1 }
 
 Push-Location $target
+[IO.File]::WriteAllText((Join-Path (Get-Location).Path 'README.md'), "# $Name`r`n", [Text.Encoding]::ASCII)
 git init -b main | Out-Null
 git add -A
 git commit -qm "Initialize from claude-starter template"

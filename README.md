@@ -5,7 +5,8 @@ A batteries-included Claude Code project template: the workflow skills, referenc
 ## What's inside
 
 - **`CLAUDE.md`** — kernel rules: popup-tool ban, caveman-ultra default prose mode, verification honesty rules, subagent dispatch discipline, git auto-commit workflow, reference-library index. Two `FILL IN` sections (verification limits, deploy target) to configure per project.
-- **`.claude/skills/`** — 27 portable skills, including:
+- **`.claude/skills/`** — 29 portable skills, including:
+  - *Template lifecycle:* `init-project` (one-time guided setup of a spawned project), `sync-starter` (two-way sync with this template)
   - *Workflow:* `recall` (project memory), `caveman` (terse mode), `safe-ship`, `pr`, `addskill`, `enhance-prompt`, `handoff-audit`, `why`, `learning`, `lab`, `conflict`
   - *Discipline:* `brainstorming`, `writing-plans`, `executing-plans`, `systematic-debugging`, `test-driven-development`, `verification-before-completion`, `impartial-review`, `subagent-driven-development`, `dispatching-parallel-agents`, `using-git-worktrees`, `using-superpowers`, `writing-skills`, `applying-best-practices`, `finishing-a-development-branch`
   - *Craft:* `impeccable` (frontend design), `humanizer` (de-AI writing)
@@ -39,10 +40,9 @@ This repo is marked as a template — click **Use this template → Create a new
 ## After creating a project
 
 1. Open the new folder in Claude Code.
-2. Fill in the two `FILL IN` sections in `CLAUDE.md` (verification limits, environment & deploy target). Delete the template note.
-3. Tune `applying-best-practices` to the project's stack (it ships as a generic web/TS baseline).
-4. Start working — `recall`/`learning` will grow the reference library as quirks surface.
+2. Run `/init-project` — guided one-time setup: detects the stack, fills the `FILL IN` sections of `CLAUDE.md` via Q&A, seeds the reference files, tunes `applying-best-practices` to the stack, expands the README stub.
+3. Start working — `recall`/`learning` will grow the reference library as quirks surface.
 
 ## Maintaining the template
 
-Improvements discovered in any project flow back here: edit the skill/kernel in this repo, commit, push. Future projects inherit them; existing projects can cherry-pick.
+Improvements discovered in any project flow back here, and template updates flow out to projects — `/sync-starter` handles both directions (selective, diff-driven; never clobbers project-tuned files). Future projects inherit template changes automatically at spawn.
