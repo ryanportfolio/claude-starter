@@ -83,9 +83,77 @@ print_skill_reminders() {
 SKILLS
 }
 
+# Weekly drift check against the claude-starter template. Quiet by design:
+# no remote configured and no network reach -> silent no-op. Counts only
+# shared-surface files the template actually ships (project-only additions
+# are not drift); applying-best-practices is excluded (tuned per project by
+# /init-project). Prints to STDOUT so Claude sees it as injected context and
+# can suggest /sync-starter.
+check_starter_drift() {
+  git rev-parse --git-dir >/dev/null 2>&1 || return 0
+
+  # Skip inside the template repo itself — nothing to drift from.
+  case "$(git remote get-url origin 2>/dev/null)" in
+    *claude-starter*) return 0 ;;
+  esac
+
+  local gitdir stamp
+  gitdir=$(git rev-parse --git-dir)
+  stamp="$gitdir/starter-drift-checked"
+  if [ -f "$stamp" ]; then
+    local now mtime
+    now=$(date +%s)
+    mtime=$(stat -c %Y "$stamp" 2>/dev/null || echo 0)
+    if [ $((now - mtime)) -lt 604800 ]; then
+      return 0
+    fi
+  fi
+  touch "$stamp" 2>/dev/null || true
+
+  local ref
+  if git remote get-url starter >/dev/null 2>&1; then
+    git fetch starter --quiet 2>/dev/null || return 0
+    ref="starter/main"
+  else
+    # No named remote (fresh clone / cloud sandbox): try a direct fetch.
+    # Fails silently when the repo is unreachable or auth is unavailable.
+    git fetch --quiet https://github.com/Aoh1578/claude-starter.git main 2>/dev/null || return 0
+    ref="FETCH_HEAD"
+  fi
+
+  local changed
+  changed=$(git diff --name-only HEAD "$ref" -- \
+    .claude/skills .claude/hooks .claude/commands .claude/settings.json \
+    ':(exclude).claude/skills/applying-best-practices' 2>/dev/null) || return 0
+  if [ -z "$changed" ]; then
+    return 0
+  fi
+
+  # Membership test via ls-tree, NOT "git cat-file -e ref:path" — the colon
+  # argument gets mangled by MSYS path conversion under Git Bash on Windows.
+  local template_files
+  template_files=$(git ls-tree -r --name-only "$ref" 2>/dev/null) || return 0
+
+  local f n=0
+  while IFS= read -r f; do
+    if [ -n "$f" ] && printf '%s\n' "$template_files" | grep -qxF "$f"; then
+      n=$((n + 1))
+    fi
+  done <<EOF
+$changed
+EOF
+
+  if [ "$n" -gt 0 ]; then
+    echo "[SessionStart] claude-starter template differs on $n shared file(s) — run /sync-starter to review and pull selectively."
+  fi
+}
+
 # Inject the caveman-ultra default into context FIRST (stdout), before any git
 # work or branch-specific exit. Independent of git state, so it runs every path.
 print_caveman_directive
+
+# Weekly template drift nudge (quiet no-op when template is unreachable).
+check_starter_drift
 
 # ---------- Cloud path ----------
 if [ "${CLAUDE_CODE_REMOTE:-}" = "true" ]; then

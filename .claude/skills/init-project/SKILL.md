@@ -56,7 +56,15 @@ Open `.claude/skills/applying-best-practices/SKILL.md`. The catalog ships as a g
 
 If `README.md` is the spawn stub (`# <name>` only), ask the user for a one-line project description and expand it minimally: name, one-liner, how to run (from `commands.md`). Don't write aspirational docs for code that doesn't exist.
 
-## Step 7: Commit
+## Step 7: Wire the starter remote
+
+```
+git remote get-url starter || git remote add starter https://github.com/Aoh1578/claude-starter.git
+```
+
+This pre-wires `/sync-starter` and lets the session-start hook surface template drift ("starter differs on N files"). Remotes are local git config, not committed — mention that a new clone on another machine needs this line re-run (or the hook's URL-fallback fetch covers it when credentials allow).
+
+## Step 8: Commit
 
 Follow the project's git rule: branch (`feat/init-project`), stage exactly the files this skill touched, commit, push, open the PR. Tell the user it's safe to merge immediately — it's configuration, not code.
 
