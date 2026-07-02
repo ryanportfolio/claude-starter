@@ -148,12 +148,32 @@ EOF
   fi
 }
 
+# Detect the template/plugin double-install footgun: this project ships the
+# starter skills un-namespaced in .claude/skills/, AND the claude-starter
+# plugin is enabled for it (project, local, or user scope). Both load ->
+# every skill appears twice. Warn so Claude can tell the user the fix.
+# Skipped inside the template repo itself (plugin installs there are tests).
+check_plugin_overlap() {
+  [ -d .claude/skills/sync-starter ] || return 0
+  case "$(git remote get-url origin 2>/dev/null)" in
+    *claude-starter*) return 0 ;;
+  esac
+  if grep -hs '"claude-starter@[^"]*": *true' \
+      .claude/settings.json .claude/settings.local.json \
+      "$HOME/.claude/settings.json" 2>/dev/null | grep -q .; then
+    echo "[SessionStart] The claude-starter PLUGIN is enabled for this project, but the project already ships the same skills un-namespaced in .claude/skills/ — every skill loads twice. Fix: 'claude plugin uninstall claude-starter' (keep the project copies; they are the tunable ones)."
+  fi
+}
+
 # Inject the caveman-ultra default into context FIRST (stdout), before any git
 # work or branch-specific exit. Independent of git state, so it runs every path.
 print_caveman_directive
 
 # Weekly template drift nudge (quiet no-op when template is unreachable).
 check_starter_drift
+
+# Plugin/template overlap warning (stdout: Claude should see it and act).
+check_plugin_overlap
 
 # ---------- Cloud path ----------
 if [ "${CLAUDE_CODE_REMOTE:-}" = "true" ]; then
