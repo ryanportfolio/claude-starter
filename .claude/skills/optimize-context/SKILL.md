@@ -39,6 +39,7 @@ The harness injects every installed skill's name + description every turn. Disab
 - **Remove untrue / stale / irrelevant rules** outright (with the user's confirmation when it's a behavioral rule).
 
 ### 4. Verify the cut
+- **Measure first, then again after:** `bash .claude/scripts/context-weight.sh` prints the file-measurable per-turn weight (kernel + global CLAUDE.md + every skill's injected description) with per-skill breakdown. Run it before touching anything so the saving is a real delta, not a guess.
 - Byte counts before/after (`wc -c`) for kernel/index edits.
 - For skill disables / MCP disconnects: confirm **next session** the items are gone (current session's context is fixed).
 - Never claim a per-turn saving you didn't measure.
