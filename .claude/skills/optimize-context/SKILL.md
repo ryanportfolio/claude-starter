@@ -54,7 +54,7 @@ The harness injects every visible skill's name + description every turn. Hide un
 ## Propagation to claude-starter
 Only the **generic, portable** wins go up — run them through `sync-starter` Direction B (it owns the genericize + apply-at-`~/CoreWise/claude-starter` + PR mechanics):
 - **Portable:** `skillOverrides` disabling broadly-unused bundled skills (lean default; a project that needs `docx`/`pdf` re-enables it), CLAUDE.md structural conventions (caveman default, thin-hooks, don't-restate-injected-content), a leaner skill file (e.g. the trimmed `caveman`).
-- **NOT portable:** account-level MCP connector disconnects (per-account, not a repo file), project-specific reference/memory content, anything FearLab-named.
+- **NOT portable:** account-level MCP connector disconnects (per-account, not a repo file), project-specific reference/memory content, anything named after the current project.
 - Genericize first: strip project names/paths/URLs. If it can't be genericized, it stays local.
 
 ## Anti-patterns

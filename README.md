@@ -1,62 +1,65 @@
 # claude-starter
 
-A batteries-included Claude Code project template: the workflow skills, reference/recall memory system, session hooks, and kernel CLAUDE.md distilled from a heavily-tuned production repo — with all project-specific content stripped out.
+A batteries-included Claude Code project template — and the system around it. Every project you spawn starts with a tuned rule kernel, 31 workflow skills, a self-populating project memory, and session hooks. Improvements you discover in any project flow back to the template; template updates flow out to every project.
 
-## What's inside
+Distilled from a heavily-tuned production repo, with all project-specific content stripped out.
 
-- **`CLAUDE.md`** — kernel rules: popup-tool ban, caveman-ultra default prose mode, verification honesty rules, subagent dispatch discipline, git auto-commit workflow, reference-library index. Two `FILL IN` sections (verification limits, deploy target) to configure per project.
-- **`.claude/skills/`** — 29 portable skills, including:
-  - *Template lifecycle:* `init-project` (one-time guided setup of a spawned project), `sync-starter` (two-way sync with this template)
-  - *Workflow:* `recall` (project memory), `caveman` (terse mode), `safe-ship`, `pr`, `addskill`, `enhance-prompt`, `handoff-audit`, `why`, `learning`, `lab`, `conflict`
-  - *Discipline:* `brainstorming`, `writing-plans`, `executing-plans`, `systematic-debugging`, `test-driven-development`, `verification-before-completion`, `impartial-review`, `subagent-driven-development`, `dispatching-parallel-agents`, `using-git-worktrees`, `using-superpowers`, `writing-skills`, `applying-best-practices`, `finishing-a-development-branch`
-  - *Craft:* `impeccable` (frontend design), `humanizer` (de-AI writing)
-- **`.claude/reference/`** — six skeleton topic files (`secrets`, `architecture`, `pitfalls`, `commands`, `tech-stack`, `deployment`) that `recall` and `learning` populate over time.
-- **`.claude/hooks/session-start.sh`** — auto-rebase onto origin/main (cloud), read-only fetch (local), caveman directive + universal-skills reminder injection.
-- **`.claude/settings.json`** — hook wiring + read-only Bash permission allowlist.
-- **`bootstrap/`** — the one-click project creator, plus `setup-machine.ps1` ("dotfiles for Claude"): keep your machine-level `~/.claude` files (global CLAUDE.md, keybindings, personal skills) in `bootstrap/machine/home-claude/` in your fork and seed any new machine in one command (template-only; removed from spawned projects).
-- **`.claude-plugin/`** — plugin + marketplace manifests so the skill set is installable without cloning (template-only).
+## Why this exists
 
-## Installing the skills as a plugin (no clone)
+Claude Code gets dramatically better with good standing instructions, skills, and accumulated project knowledge — but that setup usually lives in one repo and dies there. This template turns it into a fleet:
 
-Want the skills in an existing project without adopting the whole template? This repo doubles as a plugin marketplace:
+- **Spawn configured.** New projects start with the kernel rules, skill set, and memory system already in place — `/init-project` tailors them to the stack in one Q&A.
+- **Self-improving.** `/recall` and `/learning` capture gotchas into a committed reference library as you work. `/sync-starter` moves generic wins back to the template; a weekly session-start nudge tells projects when the template is ahead.
+- **Measurably lean.** Always-loaded context is a per-turn tax. `bash .claude/scripts/context-weight.sh` prints the exact weight (template baseline: ~4.5k tokens/turn); the `/optimize-context` skill is the playbook for cutting it.
+
+## Quick start
+
+**Use as a template (full experience — kernel, hooks, memory, skills):**
+
+- GitHub UI: **Use this template → Create a new repository**, clone, open in Claude Code, run `/init-project`.
+- One-click (Windows): double-click `bootstrap/New-ClaudeProject.cmd` — creates a private repo from the template via `gh`, clones it, strips template-only files.
+- CLI: `.\bootstrap\new-claude-project.ps1 -Name my-app -Dest C:\code`
+
+**Or install just the skills as a plugin (any existing project, no clone):**
 
 ```
 /plugin marketplace add Aoh1578/claude-starter
 /plugin install claude-starter@claude-starter
 ```
 
-Plugin skills are namespaced (`/claude-starter:recall`, `/claude-starter:caveman`, …). The plugin ships **skills only** — the kernel `CLAUDE.md`, hooks, and reference library come with the template path below.
+Plugin skills are namespaced (`/claude-starter:recall`, …). Don't install the plugin into a project spawned from the template — it already has the skills, un-namespaced.
 
-**Don't install the plugin into a project spawned from this template** — those already have the skills under `.claude/skills/` and you'd get duplicates.
+## What's inside
 
-## Creating a new project
+| Piece | What it does |
+|---|---|
+| `CLAUDE.md` | Kernel rules loaded every turn: verification honesty, git auto-commit/PR workflow, subagent discipline, context-restraint principles. Two `FILL IN` sections configured per project by `/init-project`. |
+| `.claude/skills/` | 31 skills — lifecycle (`init-project`, `sync-starter`, `addskill`, `optimize-context`), workflow (`recall`, `learning`, `safe-ship`, `pr`, `merge`, `caveman`, `enhance-prompt`, `handoff-audit`, `why`, `lab`, `conflict`), discipline (`brainstorming`, `writing-plans`, `executing-plans`, `systematic-debugging`, `test-driven-development`, `verification-before-completion`, `impartial-review`, `subagent-driven-development`, `dispatching-parallel-agents`, `using-git-worktrees`, `using-superpowers`, `writing-skills`, `applying-best-practices`, `finishing-a-development-branch`), craft (`impeccable`, `humanizer`). |
+| `.claude/reference/` | Project memory: six topic files (`secrets`, `architecture`, `pitfalls`, `commands`, `tech-stack`, `deployment`) that `/recall` and `/learning` populate as you work. Committed — travels to every machine and sandbox. |
+| `.claude/hooks/session-start.sh` | Cloud: auto-rebase onto origin/main. Local: read-only fetch. Both: re-assert session defaults, weekly template-drift nudge. |
+| `.claude/scripts/context-weight.sh` | Prints the per-turn always-loaded context cost, per-skill breakdown. |
+| `.claude/settings.json` | Hook wiring + a read-only Bash permission allowlist. |
+| `.claude-plugin/` | Plugin + marketplace manifests (the no-clone install path). Template-only; removed by `/init-project`. |
+| `bootstrap/` | Project creator scripts + `setup-machine.ps1` (below). Template-only. |
 
-### One click (recommended)
+## After spawning a project
 
-Double-click `bootstrap/New-ClaudeProject.cmd` (keep a copy anywhere). It prompts for a name, then:
+Run `/init-project` once. It detects the stack, asks a short Q&A (deploy target, verification limits, hard lines), picks a **profile** — web-app / backend-CLI-library / data / writing — that prunes skills the project will never use, seeds the reference files, tunes the best-practices catalog, and commits.
 
-1. Creates a **private** GitHub repo from this template (`gh repo create --template`)
-2. Clones it locally
-3. Removes the template-only bootstrap files
+From then on the project runs itself: gotchas get saved with `/recall save`, debug arcs end with `/learning`, and `/sync-starter` keeps it exchanging improvements with the template.
 
-Requires the `gh` CLI authenticated (`gh auth status`). Without it, the script builds the folder locally and prints the manual repo-creation steps.
+## Dotfiles for Claude
 
-### Command line
+Machine-level `~/.claude` files (global CLAUDE.md, keybindings, personal skills) don't travel with any repo. Keep your copies in `bootstrap/machine/home-claude/` in your fork, then on any new machine:
 
 ```powershell
-.\bootstrap\new-claude-project.ps1 -Name my-app -Dest C:\code
+.\bootstrap\setup-machine.ps1          # copies missing files only; -Force overwrites; -DryRun previews
 ```
 
-### GitHub UI
+## Forking this template
 
-This repo is marked as a template — click **Use this template → Create a new repository** on GitHub, then clone. Delete `bootstrap/` and replace this README in the new project.
+Replace the upstream references with your own fork's (all functional, all findable with one grep for `Aoh1578`): the template repo id in `sync-starter` and `init-project` skills, the drift-check URL in `session-start.sh`, the defaults in `bootstrap/new-claude-project.ps1`, and the plugin manifests in `.claude-plugin/`.
 
-## After creating a project
+## Provenance & license
 
-1. Open the new folder in Claude Code.
-2. Run `/init-project` — guided one-time setup: detects the stack, fills the `FILL IN` sections of `CLAUDE.md` via Q&A, seeds the reference files, tunes `applying-best-practices` to the stack, expands the README stub.
-3. Start working — `recall`/`learning` will grow the reference library as quirks surface.
-
-## Maintaining the template
-
-Improvements discovered in any project flow back here, and template updates flow out to projects — `/sync-starter` handles both directions (selective, diff-driven; never clobbers project-tuned files). Future projects inherit template changes automatically at spawn.
+MIT (see `LICENSE`). Several skills are forked from upstream work — notably Jesse Vincent's [superpowers](https://github.com/obra/superpowers) (MIT) and Paul Bakaus's impeccable (Apache 2.0, itself based on Anthropic's frontend-design skill). `.claude/skills/PROVENANCE.md` tracks every skill's origin, license, and local deltas; per-skill LICENSE/NOTICE files ship in the skill folders.
