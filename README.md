@@ -27,7 +27,7 @@ Claude Code gets dramatically better with good standing instructions, skills, an
 /plugin install claude-starter@claude-starter
 ```
 
-Plugin skills are namespaced (`/claude-starter:recall`, …). Don't install the plugin into a project spawned from the template — it already has the skills, un-namespaced.
+Plugin skills are namespaced (`/claude-starter:recall`, …). Projects spawned from the template already have the skills un-namespaced, so they don't need the plugin — and if both end up active anyway, the session-start hook detects the overlap and tells you the one-line fix.
 
 ## What's inside
 
