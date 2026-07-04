@@ -35,7 +35,7 @@ There are two independent ways to use this repo. Pick based on whether you want 
 **B. Install just the skills as a plugin** (any existing project, no clone)
 
 ```
-/plugin marketplace add Aoh1578/claude-starter
+/plugin marketplace add ryanportfoilio/claude-starter
 /plugin install claude-starter@claude-starter
 ```
 
