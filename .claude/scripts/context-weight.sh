@@ -1,12 +1,12 @@
 #!/bin/bash
-# context-weight.sh — approximate the per-turn "always-loaded" context cost.
+# context-weight.sh: approximate the per-turn "always-loaded" context cost.
 #
 # Measures what reloads every turn: the CLAUDE.md kernel, the global
 # ~/.claude/CLAUDE.md, and every skill's injected name+description (the
-# available-skills list). Reference files and skill BODIES are excluded —
+# available-skills list). Reference files and skill BODIES are excluded:
 # they load on demand and cost nothing until invoked.
 #
-# Token counts are chars/4 — an approximation for trend lines, not billing.
+# Token counts are chars/4, an approximation for trend lines, not billing.
 # Run before and after an /optimize-context pass to prove the cut.
 #
 # Usage: bash .claude/scripts/context-weight.sh   (from the repo root)
