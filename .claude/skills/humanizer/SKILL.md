@@ -20,10 +20,6 @@ Load when the user asks to humanize, de-AI, de-slop, unslop, or un-ChatGPT text;
 
 **Book writing:** if the user wants narrative craft (scene, economy, delayed revelation), they may prefer the **Book writing** chat skill. Humanizer is general de-slop; Book writing is craft-first.
 
-## Chat mirror (keep in sync)
-
-`server/chat-builtin-skills.ts` and `client/src/lib/chat-builtin-skills.ts` (`builtin:skill:humanizer`) hold a **token-budget distill** of this skill. When you add or rename patterns here, update the four checklist lines there. Do not paste the full agent skill into chat.
-
 ## Input modes
 
 1. **Inline** — user pastes text. Rewrite in the reply.

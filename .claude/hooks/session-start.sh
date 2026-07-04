@@ -13,7 +13,7 @@ set -euo pipefail
 #
 # Note: we deliberately do NOT cat CLAUDE.md here. Claude Code auto-loads it as
 # project memory, and SessionStart only injects context via stdout/additionalContext
-# (not stderr) — so a stderr cat was redundant noise, not context injection.
+# (not stderr), so a stderr cat was redundant noise, not context injection.
 #
 # LOCAL (CLAUDE_CODE_REMOTE unset):
 #   - Read-only fetch from origin (prime the cache, no output)
@@ -45,13 +45,13 @@ fetch_with_retry() {
 # Print the caveman-ultra session default to STDOUT.
 #
 # CRITICAL: this goes to stdout, NOT stderr. SessionStart injects context only
-# via stdout/additionalContext — stderr is user-visible diagnostic noise that
+# via stdout/additionalContext. stderr is user-visible diagnostic noise that
 # Claude never sees. The caveman default lives in CLAUDE.md, but project memory
 # is easy to miss at session start, so we re-assert it here as injected context
 # to make it the first thing Claude acts on. Keep it on stdout or it does nothing.
 print_caveman_directive() {
   cat <<'CAVEMAN'
-[SessionStart] ACTIVE SESSION DEFAULT — caveman ultra (per CLAUDE.md).
+[SessionStart] ACTIVE SESSION DEFAULT: caveman ultra (per CLAUDE.md).
 BEFORE your first reply, invoke the `caveman` skill at ultra intensity (Skill tool,
 args: "ultra") and apply that style to ALL prose replies for the entire session:
 terse, abbreviated, arrows for causality, full technical accuracy preserved. This
@@ -66,11 +66,11 @@ CAVEMAN
 
 # Print the fixed "universal skills" reminder block.
 # Cross-cutting skills that apply to most sessions regardless of task; project-
-# specific skills are not listed — Claude discovers those from the
+# specific skills are not listed. Claude discovers those from the
 # available-skills list.
 print_skill_reminders() {
   cat >&2 <<'SKILLS'
-[SessionStart] Universal skills — invoke proactively when the trigger fires:
+[SessionStart] Universal skills. Invoke proactively when the trigger fires:
   - caveman                       → FIRST, at session start: /caveman ultra (default prose mode)
   - applying-best-practices       → BEFORE non-trivial edits (features, refactors, perf, bug fixes)
   - recall                        → BEFORE work in unfamiliar areas; /recall save <text> after gotchas
@@ -92,7 +92,7 @@ SKILLS
 check_starter_drift() {
   git rev-parse --git-dir >/dev/null 2>&1 || return 0
 
-  # Skip inside the template repo itself — nothing to drift from.
+  # Skip inside the template repo itself: nothing to drift from.
   case "$(git remote get-url origin 2>/dev/null)" in
     *claude-starter*) return 0 ;;
   esac
@@ -129,7 +129,7 @@ check_starter_drift() {
     return 0
   fi
 
-  # Membership test via ls-tree, NOT "git cat-file -e ref:path" — the colon
+  # Membership test via ls-tree, NOT "git cat-file -e ref:path": the colon
   # argument gets mangled by MSYS path conversion under Git Bash on Windows.
   local template_files
   template_files=$(git ls-tree -r --name-only "$ref" 2>/dev/null) || return 0
@@ -144,7 +144,7 @@ $changed
 EOF
 
   if [ "$n" -gt 0 ]; then
-    echo "[SessionStart] claude-starter template differs on $n shared file(s) — run /sync-starter to review and pull selectively."
+    echo "[SessionStart] claude-starter template differs on $n shared file(s). Run /sync-starter to review and pull selectively."
   fi
 }
 
@@ -161,7 +161,7 @@ check_plugin_overlap() {
   if grep -hs '"claude-starter@[^"]*": *true' \
       .claude/settings.json .claude/settings.local.json \
       "$HOME/.claude/settings.json" 2>/dev/null | grep -q .; then
-    echo "[SessionStart] The claude-starter PLUGIN is enabled for this project, but the project already ships the same skills un-namespaced in .claude/skills/ — every skill loads twice. Fix: 'claude plugin uninstall claude-starter' (keep the project copies; they are the tunable ones)."
+    echo "[SessionStart] The claude-starter PLUGIN is enabled for this project, but the project already ships the same skills un-namespaced in .claude/skills/, so every skill loads twice. Fix: 'claude plugin uninstall claude-starter' (keep the project copies; they are the tunable ones)."
   fi
 }
 
@@ -233,7 +233,7 @@ if ! git remote get-url origin >/dev/null 2>&1; then
   exit 0
 fi
 
-# Quiet read-only fetch — prime the cache so subsequent git commands in this
+# Quiet read-only fetch: prime the cache so subsequent git commands in this
 # session see up-to-date refs. No output unless retries trigger a warning.
 fetch_with_retry --all --prune --quiet 2>/dev/null || \
   echo "[SessionStart] Warning: fetch failed after 4 attempts; reporting from cached state" >&2
