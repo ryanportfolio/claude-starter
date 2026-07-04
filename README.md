@@ -2,7 +2,7 @@
 
 A Claude Code project template that stays in sync with the projects it spawns.
 
-Most people configure Claude Code once, per repo, and that setup dies there. This template turns the config into a fleet: every new project starts from a tuned rule kernel, a curated skill set, a self-populating memory library, and session hooks. Improvements made in any project flow back to the template, and template updates flow out to every project.
+This template turns the config into a fleet: every new project starts from a tuned rule kernel, a curated skill set, a self-populating memory library, and session hooks. Improvements made in any project flow back to the template, and template updates flow out to every project.
 
 Distilled from a production repo, with the project-specific content stripped out.
 
