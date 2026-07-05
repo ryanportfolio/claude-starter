@@ -1,5 +1,5 @@
 ---
-description: One-time first-session setup for a project spawned from the claude-starter template. Use when the user says /init-project, "set up this project", "configure the starter", "initialize the template" — or proactively when you notice CLAUDE.md still contains "FILL IN" template markers at the start of a session. Detects the stack, picks a profile (web / backend / data / writing) that prunes irrelevant skills, fills CLAUDE.md's FILL IN sections via a short Q&A, seeds the reference files, tunes the best-practices catalog, removes template artifacts, and commits.
+description: One-time first-session setup for a project spawned from the claude-starter template. Use when the user says /init-project, "set up this project", "configure the starter", "initialize the template" — or proactively when you notice CLAUDE.md still contains "FILL IN" template markers at the start of a session. Detects the stack, picks a profile (web / backend / data / writing / minimal) that prunes irrelevant skills, fills CLAUDE.md's FILL IN sections via a short Q&A, seeds the reference files, tunes the best-practices catalog, removes template artifacts, and commits.
 ---
 
 # init-project — configure a freshly spawned starter project
@@ -23,7 +23,7 @@ If the repo is EMPTY (fresh spawn, no app code yet), that's fine — note it and
 
 Plain chat, numbered (popup tools are banned). Only ask what's actually unknown — skip questions the scaffold already answered:
 
-1. **Profile:** which best describes this project — **web-app** (has UI), **backend/CLI/library** (code, no UI), **data/notebooks**, or **writing/docs**? Lead with the guess detection supports ("scaffold says web-app — confirm?"), only truly ask when the repo is empty.
+1. **Profile:** which best describes this project — **web-app** (has UI), **backend/CLI/library** (code, no UI), **data/notebooks**, **writing/docs**, or **minimal** (leanest context: only the core workflow skills stay on)? Lead with the guess detection supports ("scaffold says web-app — confirm?"), only truly ask when the repo is empty. Detection never guesses minimal — it's an explicit user choice for when context weight matters more than skill breadth.
 2. **Deploy target:** where will this run? (host/platform, database, where secrets live)
 3. **Sandbox capabilities:** can sessions in this environment run installs, builds, type-checks, tests meaningfully? Can the user reach a dev server the session starts? Is there a browser?
 4. **Authoritative verification:** what's the final word that a change works — local test suite, CI, a deploy log?
@@ -56,6 +56,7 @@ If the user doesn't know yet (brand-new project), write the honest default: "not
 | backend / CLI / library | `impeccable`, `lab` |
 | data / notebooks | `impeccable`, `lab` |
 | writing / docs | `impeccable`, `lab`, `test-driven-development`, `subagent-driven-development` |
+| minimal | every project skill EXCEPT the keep-list: `recall`, `pr`, `merge`, `handoff-audit`, `caveman`, `minimal` (see the `minimal` skill — `/minimal off` restores the full set later) |
 
 The table is a floor, not a ceiling — offer obvious extras ("no frontend planned, also drop `humanizer`? it's for prose deliverables"). Each `off` saves its description from every turn (`bash .claude/scripts/context-weight.sh` shows per-skill weight); takes effect next session.
 

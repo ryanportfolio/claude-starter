@@ -19,7 +19,7 @@ What sets this apart from a folder of dotfiles:
 - **One-click spawn, one-command fork.** `bootstrap/New-ClaudeProject.cmd` creates, clones, and strips a new private repo in one double-click. `bash bootstrap/retarget-fork.sh <you>/<fork>` repoints every functional upstream reference to your fork and verifies nothing was missed.
 - **Hooks that do real work.** Session start auto-rebases in the cloud, primes git locally, re-asserts session defaults, and detects plugin/skill overlap — with the one-line fix printed for you.
 - **CI-gated config.** Every push parse-checks the executable surface: bootstrap scripts, hooks, and JSON manifests. Broken config never lands.
-- **Minimal mode.** `/minimal` parks every skill except a six-skill core (`recall`, `pr`, `merge`, `handoff-audit`, `caveman`, `minimal`) to shrink the always-loaded skill list to its floor; `/minimal off` restores the full set. Real token savings, reversible, one command each way.
+- **Minimal mode.** `/minimal` turns off every skill except a six-skill core (`recall`, `pr`, `merge`, `handoff-audit`, `caveman`, `minimal`) via committed `skillOverrides`, shrinking the always-loaded skill list to its floor; `/minimal off` restores the full set. Also available as the `minimal` profile in `/init-project` for projects that want lean from day one.
 
 ## Why this exists
 
@@ -80,7 +80,7 @@ This path reads the repo's marketplace manifest, so it works only once the repo 
 
 ## After spawning a project
 
-Run `/init-project` once. It detects the stack, asks a short Q&A (deploy target, verification limits, hard lines), and picks a **profile** (web-app / backend-CLI-library / data / writing) that prunes skills the project will never use. It then seeds the reference files, tunes the best-practices catalog, removes the template-only files (including `.claude-plugin/`), and commits.
+Run `/init-project` once. It detects the stack, asks a short Q&A (deploy target, verification limits, hard lines), and picks a **profile** (web-app / backend-CLI-library / data / writing / minimal) that prunes skills the project will never use. It then seeds the reference files, tunes the best-practices catalog, removes the template-only files (including `.claude-plugin/`), and commits.
 
 From then on the project runs itself: gotchas get saved with `/recall save`, debug arcs end with `/learning`, and `/sync-starter` keeps improvements moving in both directions.
 
