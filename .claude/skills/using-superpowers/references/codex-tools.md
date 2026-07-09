@@ -2,6 +2,11 @@
 
 Skills use Claude Code tool names. When you encounter these in a skill, use your platform equivalent:
 
+For repos created from this starter, `AGENTS.md` is the Codex safety boundary.
+Do not inherit Claude-only SessionStart hook behavior, persistent prose modes, or
+auto-commit/auto-merge standing orders unless the user explicitly asks for them
+in the current Codex session.
+
 | Skill references | Codex equivalent |
 |-----------------|------------------|
 | `Task` tool (dispatch subagent) | `spawn_agent` (see [Subagent dispatch requires multi-agent support](#subagent-dispatch-requires-multi-agent-support)) |
