@@ -7,8 +7,7 @@ project start with battle-tested agent behavior instead of an empty prompt.
 This began as `claude-starter`, and Claude Code is still the first-class
 runtime. The broader framing is **agent firmware**: not an app and not a full
 operating system, but the low-level configuration that tells an AI coding
-environment how to boot, remember, verify, ship, and stay lean. It is OS-like in
-outcome and firmware-like in scope.
+environment how to boot, remember, verify, ship, and stay lean.
 
 ## Why This Exists
 
