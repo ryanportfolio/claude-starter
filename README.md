@@ -129,7 +129,8 @@ be loaded every turn, and make useful generic work travel.
 See `.claude/skills/PROVENANCE.md` for forked skill provenance, licenses, and
 local deltas.
 
-- **Lifecycle:** `init-project`, `sync-starter`, `addskill`, `optimize-context`.
+- **Lifecycle:** `init-project`, `sync-starter`, `addskill`, `optimize-context`,
+  `forge-repo-ui-skill`.
 - **Workflow:** `recall`, `learning`, `safe-ship`, `pr`, `merge`, `advocate`,
   `caveman`, `enhance-prompt`, `handoff-audit`, `why`, `lab`, `conflict`.
 - **Discipline:** `brainstorming`, `writing-plans`, `executing-plans`,
@@ -138,7 +139,7 @@ local deltas.
   `subagent-driven-development`, `dispatching-parallel-agents`,
   `using-git-worktrees`, `using-superpowers`, `writing-skills`,
   `applying-best-practices`, `finishing-a-development-branch`.
-- **Craft:** `impeccable`, `humanizer`.
+- **Craft:** `humanizer`.
 
 ## safety model
 
@@ -192,7 +193,6 @@ The script copies missing files only. `-Force` overwrites. `-DryRun` previews.
 MIT. See `LICENSE`.
 
 Several skills are forked from upstream work, notably Jesse Vincent's
-`superpowers` skills (MIT) and Paul Bakaus's `impeccable` (Apache 2.0, based on
-Anthropic's frontend-design skill). `.claude/skills/PROVENANCE.md` tracks forked
-origins, licenses, and local changes. Per-skill LICENSE and NOTICE files ship in
-the skill folders.
+`superpowers` skills (MIT). `.claude/skills/PROVENANCE.md` tracks forked origins,
+licenses, and local changes. Per-skill LICENSE and NOTICE files ship in
+third-party skill folders when required.
