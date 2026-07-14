@@ -141,5 +141,3 @@ Any one of these: stop, go back to that gate.
   tools; this is the discipline of when to reach for them.
 - Don't apply it to trivial work. Forcing all five gates onto a two-minute edit is its own failure
   mode.
-- If a task keeps failing under this discipline, that's the signal to escalate to a human, not to
-  loosen the process. Keep the discipline either way.
