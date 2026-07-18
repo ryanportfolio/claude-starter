@@ -87,7 +87,7 @@ Use this when you want the Claude skills in an existing project without cloning
 the template:
 
 ```text
-/plugin marketplace add ryanportfolio/claude-starter
+/plugin marketplace add ryanportfolio/AI-Firmware
 /plugin install claude-starter@claude-starter
 ```
 

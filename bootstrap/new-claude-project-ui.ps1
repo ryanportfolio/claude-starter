@@ -29,7 +29,7 @@ if ([string]::IsNullOrWhiteSpace($script:ScriptDir)) {
 }
 
 $DefaultDest = Join-Path $HOME 'code'
-$DefaultTmpl = 'ryanportfolio/claude-starter'
+$DefaultTmpl = 'ryanportfolio/AI-Firmware'
 $NameRegex   = '^[a-zA-Z0-9._-]+$'
 
 # --- cross-thread channel: a synchronized queue of message hashtables --------
