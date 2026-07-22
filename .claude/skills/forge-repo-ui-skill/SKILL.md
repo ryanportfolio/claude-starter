@@ -1,9 +1,13 @@
 ---
 name: forge-repo-ui-skill
-description: Use when the user wants a repository-specific UI or design skill synthesized from current agent skills; not for ordinary UI implementation or backend-only work.
+description: Use when the user wants a repository-specific UI or design skill synthesized from current agent skills; not for ordinary UI implementation or backend-only work. Invoke with args carrying the user's design anchors, taste references, and target scope — the skill runs forked and sees no conversation history.
+context: fork
+agent: general-purpose
 ---
 
 # Forge Repo UI Skill
+
+> Forked execution: you have no conversation history. Everything you need arrives via the invocation args (design anchors, taste references, scope) and the repository itself. If args are empty and the repo's documents don't establish the design direction, state what's missing in your result instead of guessing.
 
 Create one repository-native UI skill. Do not install a stack of competing design personalities and do not turn this global workflow into a universal design encyclopedia.
 

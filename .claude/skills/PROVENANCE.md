@@ -28,7 +28,7 @@ LICENSE/NOTICE files in the skill folder.
 
 ## Homegrown (this repo)
 
-`addskill`, `applying-best-practices`, `conflict`, `enhance-prompt`,
+`addskill`, `applying-best-practices`, `conflict`, `distribute-skill`, `enhance-prompt`,
 `forge-repo-ui-skill`, `handoff-audit`, `impartial-review`, `init-project`, `lab`, `learning`,
 `merge`, `optimize-context`, `pr`, `recall`, `safe-ship`, `sync-starter`,
 `why`.
