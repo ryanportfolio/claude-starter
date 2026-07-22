@@ -60,6 +60,20 @@ On the finished draft, in order:
 8. Count repeats of abstract nouns and adjectives; rewrite the sentences that lean on them.
 9. Title check: does it say what the reader gets, unopened?
 
+## Verdict
+
+Close every review with a verdict, no exceptions:
+
+- **PASS**: nothing in Hard bans or Rules is still violated.
+- **FAIL**: at least one violation remains. Name each one and the rule it breaks.
+
+Then label every remaining note:
+
+- **Requirement**: fixes a Hard bans or Rules violation. The draft does not ship until applied. Any open requirement means the verdict is FAIL.
+- **Suggestion**: optional improvement (tighter phrasing, alternative title, tone tweak). The draft can ship without it.
+
+Never leave a note unlabeled, and never end the review without the PASS/FAIL line.
+
 ## Anti-patterns
 
 - Don't trade one tell for another (em dashes → semicolon storms, fancy word → sidegrade synonym).
