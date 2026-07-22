@@ -19,7 +19,7 @@ Settle these silently first, do not narrate them: who reads this; what they shou
 
 ## Hard bans
 
-- **Em dashes (U+2014), anywhere.** No en-dash or double-hyphen stand-ins. Use a period, comma, colon, or parentheses; " · " (middot) for label-style separators. Reads as an AI tell.
+- **Em dashes (U+2014), anywhere.** No en-dash or double-hyphen stand-ins. Use a period, comma, colon, or parentheses; a middle dot (U+00B7) for label-style separators. Reads as an AI tell.
 - **Trailing periods on headings** (h1-h6, section titles, kickers, figure titles). Periods never appear in large display text at all.
 - **Negation pivots, every disguise.** "Not just X, it's Y", "The point isn't X. It's Y", "This isn't about A; it's about B", "less about X than Y". Splitting across sentences doesn't cure it. Delete the denial half, open with the point. A negation survives only when it corrects a real misconception the reader holds, after the positive claim.
 - **Negative-definition headings** ("Synthesis, not summary"). Say what it is.
@@ -76,7 +76,7 @@ Never leave a note unlabeled, and never end the review without the PASS/FAIL lin
 
 ## Anti-patterns
 
-- Don't trade one tell for another (em dashes → semicolon storms, fancy word → sidegrade synonym).
+- Don't trade one tell for another (em dashes -> semicolon storms, fancy word -> sidegrade synonym).
 - Don't reword quoted artifacts, attributed quotes, code, or error strings.
 - Don't sanitize a distinctive voice into bland professional prose.
 - Don't apply to commit subjects, code comments, or short chat replies.
